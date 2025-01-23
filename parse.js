@@ -7,10 +7,7 @@ const allDeps = new Map();
 const root = {};
 async function parseLockfile(lockfileFolder) {
   // Use pnpm official method, may avoid some unknown problems
-  const lockfileContent = await readWantedLockfile(
-    path.join(lockfileFolder),
-    {}
-  );
+  const lockfileContent = await readWantedLockfile(lockfileFolder, {});
   if (!lockfileContent) {
     throw new Error('Not lockfile found');
   }
@@ -132,8 +129,6 @@ async function parseLockfile(lockfileFolder) {
   for (const [repo, projectSnapshot] of Object.entries(importers)) {
     root[repo] = parseImporter(projectSnapshot);
   }
-
-  writeFile('./versions.json', JSON.stringify(versions, null, 2));
 }
 
 const json = {
